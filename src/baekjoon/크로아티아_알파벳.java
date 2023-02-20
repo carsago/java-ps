@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-
 /**
  * 백준 2941 크로아티아 알파벳
  * https://www.acmicpc.net/problem/2941
@@ -51,6 +50,7 @@ public class 크로아티아_알파벳 {
                 answer++;
             }
         }
+
         System.out.println(answer);
     }
 }
