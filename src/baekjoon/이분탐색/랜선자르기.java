@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-/**
- * 백준 1654, 랜선 자르기 https://www.acmicpc.net/problem/1654
- */
 public class 랜선자르기 {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,42 +12,45 @@ public class 랜선자르기 {
     public static void main(String[] args) throws IOException {
         StringTokenizer st;
         st = new StringTokenizer(br.readLine());
-        int countOfLine = Integer.parseInt(st.nextToken());
-        int countOfGoal = Integer.parseInt(st.nextToken());
 
-        long[] lines = new long[countOfLine];
+        int K = Integer.parseInt(st.nextToken());
+        long N = Long.parseLong(st.nextToken());
 
-        long maxValue = Integer.MIN_VALUE;
+        long[] lans = new long[K];
+        long max = 0;
+        for (int i = 0; i < K; i++) {
+            int value = Integer.parseInt(br.readLine());
+            lans[i] = value;
 
-        for (int i = 0; i < countOfLine; i++) {
-            final long value = Integer.parseInt(br.readLine());
-            lines[i] = value;
-            if (maxValue < value) {
-                maxValue = value;
+            if (max < value) {
+                max =  value;
             }
         }
 
-        long minValue = 0;
+        long min = 0;
+        long mid;
 
-        while (minValue <= maxValue) {
-            long midValue = (minValue + maxValue) / 2;
-            long count = getCount(lines, midValue);
+        while (min < max) {
 
-            if (count < countOfGoal) {
-                maxValue = midValue - 1;
+            mid = (min + max) / 2;
+
+            int count = getCount(mid, lans);
+            if (count < N) {
+                max = mid;
             } else {
-                minValue = midValue + 1;
+                min = mid + 1;
             }
         }
 
-        System.out.println((maxValue + minValue) / 2);
+        System.out.println("min = " + min);
+        System.out.println("max = " + max);
     }
 
-    private static long getCount(final long[] lines, final long value) {
-        long count = 0;
 
-        for (long line : lines) {
-            count += line / value;
+    private static int getCount(long max, long[] lans) {
+        int count = 0;
+        for (long lan : lans) {
+            count += lan / max;
         }
         return count;
     }

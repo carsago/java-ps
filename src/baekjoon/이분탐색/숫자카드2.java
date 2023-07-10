@@ -19,31 +19,37 @@ public class 숫자카드2 {
 
     public static void main(String[] args) throws IOException {
         StringTokenizer st;
-        final int countOfNumber = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
+
+        HashMap<Long, Integer> map = new HashMap();
+
         st = new StringTokenizer(br.readLine());
-
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        for (int i = 0; i < countOfNumber; i++) {
-            final int key = Integer.parseInt(st.nextToken());
-            map.put(key, map.getOrDefault(key, 0) + 1);
-        }
-
-        final int round = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine());
-
-        for (int i = 0; i < round; i++) {
-            final int value = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < N; i++) {
+            long value = Long.parseLong(st.nextToken());
 
             if (map.containsKey(value)) {
-                bw.write(map.get(value) + " ");
+                map.put(value, map.get(value) + 1);
+            } else {
+                map.put(value, 1);
+            }
+        }
+
+        int M = Integer.parseInt(br.readLine());
+        long[] checkValues = new long[M];
+        st = new StringTokenizer(br.readLine());
+
+        for (int i = 0; i < M; i++) {
+            checkValues[i] = Long.parseLong(st.nextToken());
+        }
+
+        for (long checkValue : checkValues) {
+            if (map.containsKey(checkValue)) {
+                bw.write(map.get(checkValue) + " ");
             } else {
                 bw.write("0 ");
             }
         }
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }

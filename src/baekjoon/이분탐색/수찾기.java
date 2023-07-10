@@ -11,52 +11,55 @@ import java.util.StringTokenizer;
  */
 public class 수찾기 {
 
-
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
-        final int size = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int[] list = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            list[i] = Integer.parseInt(st.nextToken());
+        StringTokenizer st;
+        final int N = Integer.parseInt(br.readLine());
+        int[] A = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            A[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(list);
-
-        final int round = Integer.parseInt(br.readLine());
+        final int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
+        int[] checkValues = new int[M];
 
-        for (int i = 0; i < round; i++) {
-            final int question = Integer.parseInt(st.nextToken());
-            printIfContain(list, question);
+        for (int i = 0; i < M; i++) {
+            checkValues[i] = Integer.parseInt(st.nextToken());
+        }
+
+        Arrays.sort(A);
+
+
+        for (int checkValue : checkValues) {
+            if (contain(A, checkValue)) {
+                System.out.println("1");
+            } else {
+                System.out.println("0");
+            }
         }
     }
 
-    private static void printIfContain(final int[] list, final int question) {
-        if (question > list[list.length - 1]) {
-            System.out.println("0");
-            return;
-        }
+    private static boolean contain(final int[] checkValues, final int a) {
+        int low = 0;
+        int high = checkValues.length - 1;
+        int mid;
+        while (low <= high) {
+            mid = (low + high) / 2;
 
-        if (list[list.length / 2] > question) {
-            for (int i = 0; i < list.length / 2; i++) {
-                if (list[i] == question) {
-                    System.out.println("1");
-                    return;
-                }
+            if (a > checkValues[mid]) {
+                low = mid + 1;
+            } else if (a < checkValues[mid]){
+                high = mid - 1;
             }
-        } else {
-            for (int i = list.length / 2; i < list.length; i++) {
-                if (list[i] == question) {
-                    System.out.println("1");
-                    return;
-                }
+
+            else {
+                return true;
             }
         }
 
-        System.out.println("0");
+        return false;
     }
 }

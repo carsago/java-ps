@@ -16,40 +16,49 @@ public class 나무자르기 {
     public static void main(String[] args) throws IOException {
         StringTokenizer st;
         st = new StringTokenizer(br.readLine());
-
-        final int countOfWood = Integer.parseInt(st.nextToken());
-        final int goalHeight = Integer.parseInt(st.nextToken());
-
-        int[] woods = new int[countOfWood];
-        long maxValue = Integer.MIN_VALUE;
+        long N = Long.parseLong(st.nextToken());
+        long M = Long.parseLong(st.nextToken());
 
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < countOfWood; i++) {
-            final int value = Integer.parseInt(st.nextToken());
-            woods[i] = value;
-            if (maxValue < value) {
-                maxValue = value;
+
+        int max = 0;
+
+        long[] values = new long[(int) N];
+        for (int i = 0; i < N; i++) {
+            long value = Long.parseLong(st.nextToken());
+            values[i] = value;
+            if (max < value) {
+                max = (int) value;
             }
         }
 
-        long minValue = 0;
+        int min = 0;
+        int mid;
 
-        while (minValue <= maxValue) {
-            long midValue = (maxValue + minValue) / 2;
-            int height = 0;
-            for (int wood : woods) {
-                if (wood > midValue) {
-                    height += wood - midValue;
-                }
-            }
+        max++;
 
-            if (height >= goalHeight) {
-                minValue = midValue + 1;
+        while (min < max) {
+            mid = (min + max) / 2;
+            long length = getLength(mid, values);
+
+            if (length < M) {
+                max = mid;
             } else {
-                maxValue = midValue - 1;
+                min = mid + 1;
             }
         }
 
-        System.out.println((maxValue + minValue) / 2);
+        System.out.println(max-1);
+    }
+
+    private static long getLength(int mid, long[] values) {
+        long length = 0;
+        for (long value : values) {
+            if (value > mid) {
+                length += value - mid;
+            }
+        }
+
+        return length;
     }
 }
