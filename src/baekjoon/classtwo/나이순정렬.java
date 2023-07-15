@@ -27,7 +27,6 @@ public class 나이순정렬 {
             if (values.containsKey(age)) {
                 List<String> list = values.get(age);
                 list.add(st.nextToken());
-                values.put(age, list);
             } else {
                 List<String> list = new ArrayList<>();
                 list.add(st.nextToken());
